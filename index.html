@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe5f0 50%, #ffd4e8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: flex;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Password Screen */
+        .password-screen {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .lock-container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .lock-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .lock-container h2 {
+            color: #ff6b9d;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5em;
+            text-align: center;
+            border: 3px solid #ffb6c1;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            letter-spacing: 10px;
+            font-weight: bold;
+            color: #ff6b9d;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #ff8fab;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #ff8fab 0%, #ff6b9d 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .unlock-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
+        }
+
+        .error-message {
+            color: #ff4757;
+            margin-top: 15px;
+            display: none;
+            font-size: 0.9em;
+        }
+
+        /* Message Screen */
+        .message-screen {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .message-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+        }
+
+        .message-container h1 {
+            font-size: 3em;
+            color: #ff8fab;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.3);
+            animation: bounce 2s infinite;
+        }
+
+        .message-container .name {
+            font-size: 2.5em;
+            color: #ff6b9d;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .message-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #5a5a5a;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .next-btn {
+            margin-top: 30px;
+            padding: 15px 50px;
+            font-size: 1.1em;
+            background: linear-gradient(135deg, #ff8fab 0%, #ff6b9d 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.6);
+        }
+
+        /* Photo Screen */
+        .photo-screen {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .photo-container {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 182, 193, 0.4);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+
+        .photo-frame {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 107, 157, 0.9), transparent);
+            padding: 30px 20px;
+            color: white;
+        }
+
+        .photo-overlay h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 30px;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 25px;
+            animation: float 6s infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: 2.5em;
+            opacity: 0.2;
+        }
+
+        .deco1 { top: 10px; left: 10px; }
+        .deco2 { top: 10px; right: 10px; }
+        .deco3 { bottom: 10px; left: 10px; }
+        .deco4 { bottom: 10px; right: 10px; }
+
+        @media (max-width: 600px) {
+            .lock-container, .message-container, .photo-container {
+                padding: 30px 25px;
+            }
+            .message-container h1 {
+                font-size: 2em;
+            }
+            .message-container .name {
+                font-size: 1.8em;
+            }
+            .message-text {
+                font-size: 1em;
+            }
+            .photo-overlay h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div class="screen password-screen active" id="passwordScreen">
+        <div class="lock-container">
+            <div class="lock-icon">🔒</div>
+            <h2>Masukkan Password</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="****" maxlength="4" inputmode="numeric">
+            <button class="unlock-btn" onclick="checkPassword()">Buka Kartu 💖</button>
+            <div class="error-message" id="errorMessage">❌ Password salah, coba lagi sayang!</div>
+        </div>
+    </div>
+
+    <!-- Message Screen -->
+    <div class="screen message-screen" id="messageScreen">
+        <div class="message-container">
+            <div class="heart-container" id="heartContainer1"></div>
+            <div class="decoration deco1">🌸</div>
+            <div class="decoration deco2">💐</div>
+            <div class="decoration deco3">🎂</div>
+            <div class="decoration deco4">🎈</div>
+
+            <h1>🎉 Happy Birthday 🎉</h1>
+            <div class="name">Sayang 💖</div>
+
+            <div class="message-text">
+                <p style="margin-bottom: 15px;">
+                    <strong>Selamat ulang tahun, pacarku tersayang! 🎉💖</strong>
+                </p>
+                <p style="margin-bottom: 15px;">
+                    Semoga dengan bertambahnya usia, kamu jadi pribadi yang lebih baik, selalu sayang sama orang tua, sama aku juga boleh deh hehe ❤️. Aku doain kamu sehat selalu, rajin ibadah, dan semangat terus coas-nya biar semua lancar dan kita ketemu nya cepat.
+                </p>
+                <p style="margin-bottom: 15px;">
+                    Di ulang tahun kamu kali ini, aku harap banyak hal-hal kecil yang bikin kamu bahagia. Aku nggak minta banyak, cukup kamu tetap jadi diri kamu sendiri. Tapi kalau boleh, jangan sering marah-marahnya ya sayanggg, jangan terlalu sibuk sama hp kalau lagi sama aku, ya? 😘 Satu lagi, semoga kamu selalu bahagia ya sayangku.
+                </p>
+                <p>
+                    Terima kasih sudah jadi bagian paling indah dalam hidup aku. Semoga kita bisa terus jalan bareng, saling jaga, saling dukung, dan saling membahagiain satu sama lain. Aku bangga punya kamu, dan aku sayang banget sama kamu. Selamat ulang tahun sekali lagi ya cintaku. Semoga semua yang kamu harapkan bisa terwujud ya sayangggg. 💕✨
+                </p>
+            </div>
+
+            <button class="next-btn" onclick="showPhoto()">Lihat Foto Kita 📸</button>
+        </div>
+    </div>
+
+    <!-- Photo Screen -->
+    <div class="screen photo-screen" id="photoScreen">
+        <div class="photo-container">
+            <div class="heart-container" id="heartContainer2"></div>
+            <div class="decoration deco1">💕</div>
+            <div class="decoration deco2">💕</div>
+            <div class="decoration deco3">💕</div>
+            <div class="decoration deco4">💕</div>
+
+            <div class="photo-frame">
+                <div style="width: 100%; height: 500px; background: linear-gradient(135deg, #ffc3d5 0%, #ffb3cc 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; position: relative;">
+                    <div style="font-size: 5em; margin-bottom: 20px;">💑</div>
+                    <p style="font-size: 1.5em; color: #ff6b9d; font-weight: bold; text-align: center; padding: 0 20px;">Foto Kita Berdua</p>
+                    <p style="font-size: 1em; color: #ff8fab; margin-top: 10px; text-align: center; padding: 0 20px;">Upload foto kalian di imgbb.com atau imgur.com<br>lalu ganti link di kode HTML</p>
+                </div>
+                <div class="photo-overlay">
+                    <h2>i love u sayangggkuuu 💕</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "0710";
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const errorMsg = document.getElementById('errorMessage');
+
+            if (input === correctPassword) {
+                document.getElementById('passwordScreen').classList.remove('active');
+                document.getElementById('messageScreen').classList.add('active');
+                createHearts('heartContainer1');
+                setTimeout(() => createHearts('heartContainer1'), 3000);
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').style.borderColor = '#ff4757';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                    document.getElementById('passwordInput').style.borderColor = '#ffb6c1';
+                }, 2000);
+            }
+        }
+
+        function showPhoto() {
+            document.getElementById('messageScreen').classList.remove('active');
+            document.getElementById('photoScreen').classList.add('active');
+            createHearts('heartContainer2');
+            setInterval(() => createHearts('heartContainer2'), 4000);
+        }
+
+        function createHeart(containerId) {
+            const heartContainer = document.getElementById(containerId);
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heartContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        function createHearts(containerId) {
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    createHeart(containerId);
+                }, i * 100);
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Auto-submit when 4 digits entered
+        document.getElementById('passwordInput').addEventListener('input', function(e) {
+            if (e.target.value.length === 4) {
+                setTimeout(checkPassword, 300);
+            }
+        });
+    </script>
+</body>
+</html>
